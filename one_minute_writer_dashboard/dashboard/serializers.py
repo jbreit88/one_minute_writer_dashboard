@@ -9,8 +9,13 @@ class WritingInfoSerializer(serializers.ModelSerializer):
 
 
 class WritingsSerializer(serializers.Serializer):
-    class Meta:
-        model = WritingTotals
-        fields = ('writing_id', 'total_words', 'total_time_in_seconds')
+    writing_id = serializers.CharField()
+    total_words = serializers.IntegerField()
+    total_time_in_seconds = serializers.IntegerField()
+
+class DashboardMetricsSerializer(serializers.Serializer):
+    total_words_all_time = serializers.IntegerField()
+    total_time_all_time = serializers.IntegerField()
+
 
     # import ipdb; ipdb.set_trace()
