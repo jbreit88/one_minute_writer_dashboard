@@ -43,12 +43,14 @@ def dashboard_list(request):
 
         dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
         # writings_serializer = WritingsSerializer(writings, many=True)
-    
+
         #return writings array in serialized response.
         # serialized_writings = WritingsSerializer(data=writings)
 
         return JsonResponse(dashboard_serializer.data, safe=False)
 
+    elif request.method == 'POST':
+        return JsonResponse({'message': 'this is working'}, status='201')
 
 # @api_view(['POST'])
 # def dashboard_detail(request):
