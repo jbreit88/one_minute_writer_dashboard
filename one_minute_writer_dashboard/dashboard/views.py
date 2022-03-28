@@ -6,14 +6,15 @@ from django.core import serializers
 
 from dashboard.models import WritingInfo
 from dashboard.models import WritingTotals
+from dashboard.models import DashboardMetrics
 from dashboard.serializers import WritingInfoSerializer
 from dashboard.serializers import WritingsSerializer
+from dashboard.serializers import DashboardMetricsSerializer
 from rest_framework.decorators import api_view
 from django.db.models import Sum
 
 @api_view(['GET', 'POST'])
 def dashboard_list(request):
-    # import ipdb; ipdb.set_trace()
 
     if request.method == 'GET':
         #receive array of writing_ids associated with user as writing_ids
@@ -27,16 +28,26 @@ def dashboard_list(request):
             total_words = w.aggregate(Sum('word_count'))
             total_time = w.aggregate(Sum('time_spent'))
 
-            writing_total = WritingTotals(writing_id=id, total_words=total_words, total_time_in_seconds=total_time)
+            writing_total = WritingTotals(writing_id=id, total_words=total_words['word_count__sum'], total_time_in_seconds=total_time['time_spent__sum'])
 
             writings.append(writing_total)
 
-        writings_serializer = WritingsSerializer(writings)
-        import ipdb; ipdb.set_trace()
+        time = 0
+        words = 0
+
+        for writing in writings:
+            time = time + writing.total_time_in_seconds
+            words = words + writing.total_words
+
+        dashboard_metrics = DashboardMetrics(total_words_all_time=words, total_time_all_time=time)
+
+        dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
+        # writings_serializer = WritingsSerializer(writings, many=True)
+    
         #return writings array in serialized response.
         # serialized_writings = WritingsSerializer(data=writings)
 
-        return JsonResponse(writings_serializer.data)
+        return JsonResponse(dashboard_serializer.data, safe=False)
 
 
 # @api_view(['POST'])

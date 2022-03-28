@@ -13,7 +13,14 @@ class WritingInfo(models.Model):
 
     #set method to get all words for writing id and subtract from prams value. Remainder is persisted to DB
 
-class WritingTotals(models.Model):
-    writing_id = models.IntegerField(blank=True)
-    total_words = models.IntegerField(blank=True)
-    total_time_in_seconds = models.IntegerField(blank=True) #Time spent on writing in seconds
+class WritingTotals:
+    def __init__(self, writing_id, total_words, total_time_in_seconds):
+        self.writing_id = writing_id
+        self.total_words = total_words
+        self.total_time_in_seconds = total_time_in_seconds #Time spent on writing in seconds
+
+class DashboardMetrics:
+    def __init__(self, total_words_all_time, total_time_all_time):
+        # import ipdb; ipdb.set_trace()
+        self.total_words_all_time = total_words_all_time
+        self.total_time_all_time = total_time_all_time
