@@ -88,8 +88,10 @@ WSGI_APPLICATION = 'one_minute_writer_dashboard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'brad',
-        'USER': 'brad',
+        # 'NAME': 'brad',
+        # 'USER': 'brad',
+        'NAME': 'johnnapier',
+        'USER': 'johnnapier',
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5433',
