@@ -50,7 +50,56 @@ def dashboard_list(request):
         return JsonResponse(dashboard_serializer.data, safe=False)
 
     elif request.method == 'POST':
-        return JsonResponse({'message': 'this is working'}, status='201')
+        id = request.GET.get('writing_id', '')
+
+        all_entries = WritingInfo.objects.filter(writing_id=id)
+        entries_list = list(all_entries)
+        # import ipdb; ipdb.set_trace()
+        if entries_list == []:
+
+            first_word_count = request.GET.get('word_count', '')
+            first_total_time = request.GET.get('total_time', '')
+
+            new_writing = WritingInfo.objects.create(writing_id=id, word_count=int(first_word_count), time_spent=int(first_total_time))
+
+            writing_info_serializer = WritingInfoSerializer(new_writing)
+            # import ipdb; ipdb.set_trace()
+
+            if WritingInfo.objects.filter(id=new_writing.id).exists():
+
+                return JsonResponse(writing_info_serializer.data, status=status.HTTP_201_CREATED)
+
+            return JsonResponse({'message': 'Bad request, object not saved'}, status='400')
+            # import ipdb; ipdb.set_trace()
+
+        elif entries_list != []:
+            posted_word_count = request.GET.get('word_count', '')
+            posted_time = request.GET.get('total_time', '')
+
+            w = WritingInfo.objects.filter(writing_id=id)
+
+            logged_word_total = w.aggregate(Sum('word_count'))
+            logged_time_total = w.aggregate(Sum('time_spent'))
+
+            logged_word_total_int = logged_word_total['word_count__sum']
+            logged_time_total_int = logged_time_total['time_spent__sum']
+
+            words_diff = int(posted_word_count) - int(logged_word_total_int)
+            time_diff = int(posted_time) - int(logged_time_total_int)
+
+            new_writing = WritingInfo.objects.create(writing_id=id, word_count=words_diff, time_spent=time_diff)
+
+            writing_info_serializer = WritingInfoSerializer(new_writing)
+
+            if WritingInfo.objects.filter(id=new_writing.id).exists():
+
+                return JsonResponse(writing_info_serializer.data, status=status.HTTP_201_CREATED)
+
+            return JsonResponse({'message': 'Bad request, object not saved'}, status='400')
+
+
+
+            # return JsonResponse({'message': 'this is working'}, status='201')
 
 # @api_view(['POST'])
 # def dashboard_detail(request):
