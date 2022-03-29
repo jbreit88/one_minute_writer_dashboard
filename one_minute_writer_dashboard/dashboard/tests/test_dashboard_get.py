@@ -41,11 +41,13 @@ class PublicDashboardAPITests(TestCase):
     """Test that a payload can have multiple ids and return a 200"""
     WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
     WritingInfo.objects.create(id = 2, writing_id = 2, word_count = 50, time_spent = 150,)
-
+    id_list = ['1', '2']
+    
     payload = {
-      'writing_ids': ('1', '2',)
+      # 'writing_ids': json.dumps(id_list)
+      'writing_ids': ','.join(id_list)
     }
-
+    
     response = self.client.get(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_200_OK)

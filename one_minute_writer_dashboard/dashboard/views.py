@@ -21,10 +21,10 @@ def dashboard_list(request):
     if request.method == 'GET':
         #receive array of writing_ids associated with user as writing_ids
         writing_ids = request.GET.get('writing_ids', '').split(',')
-        
         booleans = []
+        
         for obj in WritingInfo.objects.all():
-            booleans.append(obj.id == int(request.GET['writing_ids']))
+            booleans.append((str(obj.id) in writing_ids))
 
         if False in booleans:
             raise BadRequest('Invalid request')
