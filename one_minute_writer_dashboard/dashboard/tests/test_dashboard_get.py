@@ -44,10 +44,9 @@ class PublicDashboardAPITests(TestCase):
     id_list = ['1', '2']
     
     payload = {
-      # 'writing_ids': json.dumps(id_list)
       'writing_ids': ','.join(id_list)
     }
-    
+
     response = self.client.get(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_200_OK)
