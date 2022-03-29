@@ -23,61 +23,89 @@ def dashboard_list(request):
         # make empty array to fill with nested hashes of necessary information
         writings = []
 
+        # Iterate through writing_ids to count total words and time for all IDs passed
         for id in writing_ids:
             w = WritingInfo.objects.filter(writing_id=id)
             total_words = w.aggregate(Sum('word_count'))
             total_time = w.aggregate(Sum('time_spent'))
 
+            # Save totals of word count and time for each document id
             writing_total = WritingTotals(writing_id=id, total_words=total_words['word_count__sum'], total_time_in_seconds=total_time['time_spent__sum'])
 
+            # Put totals of each document in list to iterate over and sum later.
             writings.append(writing_total)
 
+        # Set some variables to keep track of added up time and words
         time = 0
         words = 0
 
         for writing in writings:
+            # These can be refactored to use += operator
+            # For each writing totals object in the writings array we add the time and word count to our counter variables above.
             time = time + writing.total_time_in_seconds
             words = words + writing.total_words
 
+        # Create a dashboard_metrics object with the totals calculated above
         dashboard_metrics = DashboardMetrics(total_words_all_time=words, total_time_all_time=time)
 
+        # Serialize data and send in a response.
         dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
-        # writings_serializer = WritingsSerializer(writings, many=True)
-    
-        #return writings array in serialized response.
-        # serialized_writings = WritingsSerializer(data=writings)
 
         return JsonResponse(dashboard_serializer.data, safe=False)
 
+    elif request.method == 'POST':
+        # Capture the posted ID
+        id = request.GET.get('writing_id', '')
 
-# @api_view(['POST'])
-# def dashboard_detail(request):
-#     if request.method == 'POST'
-#         id = request.GET.get('writing_id', '')
-#
-#         all_entries = WritingInfo.objects.filter(writing_id=id)
-#
-#         if all_entries == []
-#             w = WritingInfo(writing_id=id, word_count=request.GET.get('word_count', ''), time_spent=request.GET.get('time_spent', ''))
-#
-#             if w.save():
-#                 return JsonResponse(writing_serializer.data, status=status.HTTP_201_CREATED)
-#
-#             return JsonResponse(writing_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#         elif all_entries != []
-#             prev_word_count = all_entries.aggregate(Sum('word_count'))
-#             prev_time_spent = all_entries.aggregate(Sum('time_spent'))
-#
-#             total_word_count = request.GET.get('word_count', '')
-#             total_time_spent = request.GET.get('total_time', '')
-#
-#             add_word_count = total_word_count - prev_word_count
-#             add_time_spent = total_time_spent - prev_time_spent
-#
-#             w = WritingInfo(writing_id=id, word_count=add_word_count, time_spent=add_time_spent)
-#
-#             if w.save():
-#                 return JsonResponse(writing_serializer.data, status=status.HTTP_201_CREATED)
-#
-#             return JsonResponse(writing_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Find all rows in database associated with the document ID provided
+        all_entries = WritingInfo.objects.filter(writing_id=id)
+        entries_list = list(all_entries) # Change all entries into a list, not a query object.
+
+        if entries_list == []:
+            # If this is a new document ID, no calculations need to be done. Simply grab the word count, the time, and the ID and persist them to the DB.
+            first_word_count = request.GET.get('word_count', '')
+            first_total_time = request.GET.get('total_time', '')
+
+            new_writing = WritingInfo.objects.create(writing_id=id, word_count=int(first_word_count), time_spent=int(first_total_time))
+
+            # Serialize the data
+            writing_info_serializer = WritingInfoSerializer(new_writing)
+
+            # Check that object was persisted to the database. Return status 201 if it exists, return status 400 if creation failed.
+            if WritingInfo.objects.filter(id=new_writing.id).exists():
+
+                return JsonResponse(writing_info_serializer.data, status=status.HTTP_201_CREATED)
+
+            return JsonResponse({'message': 'Bad request, object not saved'}, status='400')
+
+        elif entries_list != []:
+            # If this document has been posted to the databse previously, we must aggregate all relevant data.
+
+            # First, capture our posted values
+            posted_word_count = request.GET.get('word_count', '')
+            posted_time = request.GET.get('total_time', '')
+
+            # Second, filter our database by the document ID to find all rows that are associated with this document. Then sub the word_count column and the time_spent column.
+            w = WritingInfo.objects.filter(writing_id=id)
+
+            logged_word_total = w.aggregate(Sum('word_count'))
+            logged_time_total = w.aggregate(Sum('time_spent'))
+
+            logged_word_total_int = logged_word_total['word_count__sum']
+            logged_time_total_int = logged_time_total['time_spent__sum']
+
+            # Make sure everything is an integer and not a string. Calculate the difference between the total posted and the accumulated previously posted data.
+            words_diff = int(posted_word_count) - int(logged_word_total_int)
+            time_diff = int(posted_time) - int(logged_time_total_int)
+
+            # Use the difference in those values to post a new row with the same ID, but the newly calculated words and time differences.
+            new_writing = WritingInfo.objects.create(writing_id=id, word_count=words_diff, time_spent=time_diff)
+
+            writing_info_serializer = WritingInfoSerializer(new_writing)
+
+            # Check that object has been eprsisted ot DB. Return a 201 status if created, and a 400 status if not.
+            if WritingInfo.objects.filter(id=new_writing.id).exists():
+
+                return JsonResponse(writing_info_serializer.data, status=status.HTTP_201_CREATED)
+
+            return JsonResponse({'message': 'Bad request, object not saved'}, status='400')
