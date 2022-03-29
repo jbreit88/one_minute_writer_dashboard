@@ -49,7 +49,7 @@ reference: [Project Specs and Overview](https://mod4.turing.edu/projects/capston
 
 ### Dependencies
 
-- [django-cors-headers](https://pypi.org/project/django-cors-headers/), [djangorestframework](https://www.django-rest-framework.org/), [psycopg2](https://pypi.org/project/psycopg2/)
+- [django-cors-headers](https://pypi.org/project/django-cors-headers/), [djangorestframework](https://www.django-rest-framework.org/), [psycopg2](https://pypi.org/project/psycopg2/), [gunicorn](https://docs.gunicorn.org/en/stable/run.html)
 
 ----------
 
