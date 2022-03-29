@@ -4,6 +4,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from django.core import serializers
 
+from django.core.exceptions import BadRequest
+
 from dashboard.models import WritingInfo
 from dashboard.models import WritingTotals
 from dashboard.models import DashboardMetrics
@@ -19,35 +21,44 @@ def dashboard_list(request):
     if request.method == 'GET':
         #receive array of writing_ids associated with user as writing_ids
         writing_ids = request.GET.get('writing_ids', '').split(',')
+        # (request.GET['writing_ids']) integer?
+        booleans = []
+        for obj in WritingInfo.objects.all():
+            booleans.append(obj.id == int(request.GET['writing_ids']))
 
+            # import ipdb; ipdb.set_trace()
+        if False in booleans:
+            raise BadRequest('Invalid request')
+        else:
+        # writing_ids[0] not in WritingInfo.objects.all()
         # make empty array to fill with nested hashes of necessary information
-        writings = []
+            writings = []
 
-        for id in writing_ids:
-            w = WritingInfo.objects.filter(writing_id=id)
-            total_words = w.aggregate(Sum('word_count'))
-            total_time = w.aggregate(Sum('time_spent'))
+            for id in writing_ids:
+                w = WritingInfo.objects.filter(writing_id=id)
+                total_words = w.aggregate(Sum('word_count'))
+                total_time = w.aggregate(Sum('time_spent'))
 
-            writing_total = WritingTotals(writing_id=id, total_words=total_words['word_count__sum'], total_time_in_seconds=total_time['time_spent__sum'])
+                writing_total = WritingTotals(writing_id=id, total_words=total_words['word_count__sum'], total_time_in_seconds=total_time['time_spent__sum'])
 
-            writings.append(writing_total)
+                writings.append(writing_total)
 
-        time = 0
-        words = 0
+            time = 0
+            words = 0
 
-        for writing in writings:
-            time = time + writing.total_time_in_seconds
-            words = words + writing.total_words
+            for writing in writings:
+                time = time + writing.total_time_in_seconds
+                words = words + writing.total_words
 
-        dashboard_metrics = DashboardMetrics(total_words_all_time=words, total_time_all_time=time)
+            dashboard_metrics = DashboardMetrics(total_words_all_time=words, total_time_all_time=time)
 
-        dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
-        # writings_serializer = WritingsSerializer(writings, many=True)
-    
-        #return writings array in serialized response.
-        # serialized_writings = WritingsSerializer(data=writings)
+            dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
+            # writings_serializer = WritingsSerializer(writings, many=True)
+        
+            #return writings array in serialized response.
+            # serialized_writings = WritingsSerializer(data=writings)
 
-        return JsonResponse(dashboard_serializer.data, safe=False)
+            return JsonResponse(dashboard_serializer.data, safe=False)
 
 
 # @api_view(['POST'])
