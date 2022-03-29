@@ -34,5 +34,18 @@ class PublicDashboardAPITests(TestCase):
     }
 
     response = self.client.get(CREATE_DASHBOARD_URL, payload)
-    # import ipdb; ipdb.set_trace()
+    
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+  
+  def test_get_dashboard_metrics_success_multiple(self):
+    """Test that a payload can have multiple ids and return a 200"""
+    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
+    WritingInfo.objects.create(id = 2, writing_id = 2, word_count = 50, time_spent = 150,)
+
+    payload = {
+      'writing_ids': ('1', '2',)
+    }
+
+    response = self.client.get(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
