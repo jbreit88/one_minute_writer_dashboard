@@ -21,12 +21,11 @@ def dashboard_list(request):
     if request.method == 'GET':
         #receive array of writing_ids associated with user as writing_ids
         writing_ids = request.GET.get('writing_ids', '').split(',')
-        # (request.GET['writing_ids']) integer?
+        
         booleans = []
         for obj in WritingInfo.objects.all():
             booleans.append(obj.id == int(request.GET['writing_ids']))
 
-            # import ipdb; ipdb.set_trace()
         if False in booleans:
             raise BadRequest('Invalid request')
         else:
@@ -92,3 +91,4 @@ def dashboard_list(request):
 #                 return JsonResponse(writing_serializer.data, status=status.HTTP_201_CREATED)
 #
 #             return JsonResponse(writing_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# import ipdb; ipdb.set_trace()
