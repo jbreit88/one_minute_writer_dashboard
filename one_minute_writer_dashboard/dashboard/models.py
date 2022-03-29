@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
-
+# Object that is persisted to database. Takes id, total time - time up to now, total word - words up till now as parameters. Because data is chunked functionality can expand to include filtering by date.
 class WritingInfo(models.Model):
     writing_id = models.IntegerField(blank=True)
     word_count = models.IntegerField(blank=True)
