@@ -96,39 +96,3 @@ def dashboard_list(request):
                 return JsonResponse(writing_info_serializer.data, status=status.HTTP_201_CREATED)
 
             return JsonResponse({'message': 'Bad request, object not saved'}, status='400')
-
-
-
-            # return JsonResponse({'message': 'this is working'}, status='201')
-
-# @api_view(['POST'])
-# def dashboard_detail(request):
-#     if request.method == 'POST'
-#         id = request.GET.get('writing_id', '')
-#
-#         all_entries = WritingInfo.objects.filter(writing_id=id)
-#
-#         if all_entries == []
-#             w = WritingInfo(writing_id=id, word_count=request.GET.get('word_count', ''), time_spent=request.GET.get('time_spent', ''))
-#
-#             if w.save():
-#                 return JsonResponse(writing_serializer.data, status=status.HTTP_201_CREATED)
-#
-#             return JsonResponse(writing_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#         elif all_entries != []
-#             prev_word_count = all_entries.aggregate(Sum('word_count'))
-#             prev_time_spent = all_entries.aggregate(Sum('time_spent'))
-#
-#             total_word_count = request.GET.get('word_count', '')
-#             total_time_spent = request.GET.get('total_time', '')
-#
-#             add_word_count = total_word_count - prev_word_count
-#             add_time_spent = total_time_spent - prev_time_spent
-#
-#             w = WritingInfo(writing_id=id, word_count=add_word_count, time_spent=add_time_spent)
-#
-#             if w.save():
-#                 return JsonResponse(writing_serializer.data, status=status.HTTP_201_CREATED)
-#
-#             return JsonResponse(writing_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

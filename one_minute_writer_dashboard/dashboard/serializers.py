@@ -16,6 +16,3 @@ class WritingsSerializer(serializers.Serializer):
 class DashboardMetricsSerializer(serializers.Serializer):
     total_words_all_time = serializers.IntegerField()
     total_time_all_time = serializers.IntegerField()
-
-
-    # import ipdb; ipdb.set_trace()
