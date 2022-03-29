@@ -24,3 +24,15 @@ class PublicDashboardAPITests(TestCase):
     response = self.client.get(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+  def test_get_dashboard_metrics_fail(self):
+    """Test that a payload with a writing id that doesn't exist fails"""
+    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
+
+    payload = {
+      'writing_ids': '2'
+    }
+
+    response = self.client.get(CREATE_DASHBOARD_URL, payload)
+    # import ipdb; ipdb.set_trace()
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
