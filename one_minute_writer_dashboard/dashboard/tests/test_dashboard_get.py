@@ -50,3 +50,29 @@ class PublicDashboardAPITests(TestCase):
     response = self.client.get(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+  def test_get_dashboard_metrics_fail_multiple(self):
+    """Test that a respons will fail with multiple incorrect payload variables"""
+    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
+    id_list = ['2', '3', '4']
+
+    payload = {
+      'writing_ids': ','.join(id_list)
+    }
+
+    response = self.client.get(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+  def test_get_dashboard_metrics_fail_mixture(self):
+    """Test that a response will fail with mix of correct and incorrect payload variables"""
+    WritingInfo.objects.create(id = 1, writing_id = 5, word_count = 100, time_spent = 200,)
+    id_list = ['2', '3', '5', '4']
+
+    payload = {
+      'writing_ids': ','.join(id_list)
+    }
+
+    response = self.client.get(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

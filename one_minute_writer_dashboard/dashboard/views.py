@@ -22,13 +22,17 @@ def dashboard_list(request):
         #receive array of writing_ids associated with user as writing_ids
         writing_ids = request.GET.get('writing_ids', '').split(',')
         booleans = []
-        
+
+        #iterates over all WritingInfo objects & compares with id list passed as params
+            #shovels boolean value whether list includes id
         for obj in WritingInfo.objects.all():
             booleans.append((str(obj.id) in writing_ids))
-
+            
+        #if any booleans in 'boolean' list are False it is a bad request
         if False in booleans:
             raise BadRequest('Invalid request')
         else:
+
         # writing_ids[0] not in WritingInfo.objects.all()
         # make empty array to fill with nested hashes of necessary information
             writings = []
