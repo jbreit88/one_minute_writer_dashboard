@@ -10,7 +10,6 @@ reference: [Project Specs and Overview](https://mod4.turing.edu/projects/capston
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#set-up">Set Up</a></li>
         <li><a href="#versions">Versions</a></li>
         <li><a href="#dependencies">Dependencies</a></li>
         </li>
