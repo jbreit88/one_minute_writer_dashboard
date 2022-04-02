@@ -27,7 +27,7 @@ def dashboard_list(request):
             #shovels boolean value whether list includes id
         for obj in WritingInfo.objects.all():
             booleans.append((str(obj.id) in writing_ids))
-            
+
         #if any booleans in 'boolean' list are False it is a bad request
         if False in booleans:
             raise BadRequest('Invalid request')
@@ -65,7 +65,7 @@ def dashboard_list(request):
         # Serialize data and send in a response.
         dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
 
-            return JsonResponse(dashboard_serializer.data, safe=False)
+        return JsonResponse(dashboard_serializer.data, safe=False)
 
     elif request.method == 'POST':
         # Capture the posted ID
