@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
+env = environ.Env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-y8--@$l-6b!ije7amrs7aov1t)9#z^y=yexdarb&r9sefmpl-c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'enigmatic-oasis-75046.herokuapp.com']
 
 
 # Application definition
@@ -85,18 +88,10 @@ WSGI_APPLICATION = 'one_minute_writer_dashboard.wsgi.application'
 #     }
 # }
 
+default_db_url = "postgres://brad:brad@localhost:5433/brad"
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'brad',
-        # 'USER': 'brad',
-        'NAME': 'johnnapier',
-        'USER': 'johnnapier',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        # 'PORT': '5433',
-        'PORT': '5432',
-    }
+    'default': env.db(default=default_db_url)
 }
 
 
