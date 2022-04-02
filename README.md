@@ -10,7 +10,6 @@ reference: [Project Specs and Overview](https://mod4.turing.edu/projects/capston
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#set-up">Set Up</a></li>
         <li><a href="#versions">Versions</a></li>
         <li><a href="#dependencies">Dependencies</a></li>
         </li>
@@ -49,7 +48,7 @@ reference: [Project Specs and Overview](https://mod4.turing.edu/projects/capston
 
 ### Dependencies
 
-- [django-cors-headers](https://pypi.org/project/django-cors-headers/), [djangorestframework](https://www.django-rest-framework.org/), [psycopg2](https://pypi.org/project/psycopg2/)
+- [django-cors-headers](https://pypi.org/project/django-cors-headers/), [djangorestframework](https://www.django-rest-framework.org/), [psycopg2](https://pypi.org/project/psycopg2/), [gunicorn](https://docs.gunicorn.org/en/stable/run.html)
 
 ----------
 

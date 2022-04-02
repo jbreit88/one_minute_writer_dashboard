@@ -4,6 +4,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from django.core import serializers
 
+from django.core.exceptions import BadRequest
+
 from dashboard.models import WritingInfo
 from dashboard.models import WritingTotals
 from dashboard.models import DashboardMetrics
@@ -19,9 +21,21 @@ def dashboard_list(request):
     if request.method == 'GET':
         #receive array of writing_ids associated with user as writing_ids
         writing_ids = request.GET.get('writing_ids', '').split(',')
+        booleans = []
 
+        #iterates over all WritingInfo objects & compares with id list passed as params
+            #shovels boolean value whether list includes id
+        for obj in WritingInfo.objects.all():
+            booleans.append((str(obj.id) in writing_ids))
+            
+        #if any booleans in 'boolean' list are False it is a bad request
+        if False in booleans:
+            raise BadRequest('Invalid request')
+        else:
+
+        # writing_ids[0] not in WritingInfo.objects.all()
         # make empty array to fill with nested hashes of necessary information
-        writings = []
+            writings = []
 
         # Iterate through writing_ids to count total words and time for all IDs passed
         for id in writing_ids:
@@ -51,7 +65,7 @@ def dashboard_list(request):
         # Serialize data and send in a response.
         dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
 
-        return JsonResponse(dashboard_serializer.data, safe=False)
+            return JsonResponse(dashboard_serializer.data, safe=False)
 
     elif request.method == 'POST':
         # Capture the posted ID
