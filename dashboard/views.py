@@ -24,9 +24,16 @@ def dashboard_list(request):
         booleans = []
 
         #iterates over all WritingInfo objects & compares with id list passed as params
-            #shovels boolean value whether list includes id
-        for obj in WritingInfo.objects.all():
-            booleans.append((str(obj.id) in writing_ids))
+        #shovels boolean value whether list includes id
+
+        #find the object by ID
+        #if ID renders null object, shovel false into booleans
+        for id in writing_ids:
+            writing = WritingInfo.objects.filter(writing_id=id)
+            if writing.exists():
+                booleans.append(True)
+            else:
+                booleans.append(False)
 
         #if any booleans in 'boolean' list are False it is a bad request
         if False in booleans:
