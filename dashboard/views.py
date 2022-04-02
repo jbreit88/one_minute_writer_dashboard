@@ -37,35 +37,35 @@ def dashboard_list(request):
         # make empty array to fill with nested hashes of necessary information
             writings = []
 
-        # Iterate through writing_ids to count total words and time for all IDs passed
-        for id in writing_ids:
-            w = WritingInfo.objects.filter(writing_id=id)
-            total_words = w.aggregate(Sum('word_count'))
-            total_time = w.aggregate(Sum('time_spent'))
+            # Iterate through writing_ids to count total words and time for all IDs passed
+            for id in writing_ids:
+                w = WritingInfo.objects.filter(writing_id=id)
+                total_words = w.aggregate(Sum('word_count'))
+                total_time = w.aggregate(Sum('time_spent'))
 
-            # Save totals of word count and time for each document id
-            writing_total = WritingTotals(writing_id=id, total_words=total_words['word_count__sum'], total_time_in_seconds=total_time['time_spent__sum'])
+                # Save totals of word count and time for each document id
+                writing_total = WritingTotals(writing_id=id, total_words=total_words['word_count__sum'], total_time_in_seconds=total_time['time_spent__sum'])
 
-            # Put totals of each document in list to iterate over and sum later.
-            writings.append(writing_total)
+                # Put totals of each document in list to iterate over and sum later.
+                writings.append(writing_total)
 
-        # Set some variables to keep track of added up time and words
-        time = 0
-        words = 0
+            # Set some variables to keep track of added up time and words
+            time = 0
+            words = 0
 
-        for writing in writings:
-            # These can be refactored to use += operator
-            # For each writing totals object in the writings array we add the time and word count to our counter variables above.
-            time = time + writing.total_time_in_seconds
-            words = words + writing.total_words
+            for writing in writings:
+                # These can be refactored to use += operator
+                # For each writing totals object in the writings array we add the time and word count to our counter variables above.
+                time = time + writing.total_time_in_seconds
+                words = words + writing.total_words
 
-        # Create a dashboard_metrics object with the totals calculated above
-        dashboard_metrics = DashboardMetrics(total_words_all_time=words, total_time_all_time=time)
+            # Create a dashboard_metrics object with the totals calculated above
+            dashboard_metrics = DashboardMetrics(total_words_all_time=words, total_time_all_time=time)
 
-        # Serialize data and send in a response.
-        dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
+            # Serialize data and send in a response.
+            dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
 
-        return JsonResponse(dashboard_serializer.data, safe=False)
+            return JsonResponse(dashboard_serializer.data, safe=False)
 
     elif request.method == 'POST':
         # Capture the posted ID
