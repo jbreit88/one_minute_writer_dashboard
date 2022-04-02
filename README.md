@@ -55,6 +55,8 @@ reference: [Project Specs and Overview](https://mod4.turing.edu/projects/capston
 ### Using This Repo
 This is a microservice designed to store data for and calculate user metrics for the One Minute Writer proejct app.
 
+You can connect to this app and access the endpoints from https://enigmatic-oasis-75046.herokuapp.com/
+
 ----------
 
 ## Project Description
