@@ -17,7 +17,7 @@ from django.db.models import Sum
 
 @api_view(['GET', 'POST'])
 def dashboard_list(request):
-
+    
     if request.method == 'GET':
         #receive array of writing_ids associated with user as writing_ids
         writing_ids = request.GET.get('writing_ids', '').split(',')
@@ -76,7 +76,11 @@ def dashboard_list(request):
 
     elif request.method == 'POST':
         # Capture the posted ID
-        id = request.GET.get('writing_id', '')
+
+        # id = request.GET.get('writing_id', '')
+        id = request.POST.get('writing_id', '')
+        
+        # import ipdb; ipdb.set_trace()
 
         # Find all rows in database associated with the document ID provided
         all_entries = WritingInfo.objects.filter(writing_id=id)
@@ -84,9 +88,12 @@ def dashboard_list(request):
 
         if entries_list == []:
             # If this is a new document ID, no calculations need to be done. Simply grab the word count, the time, and the ID and persist them to the DB.
-            first_word_count = request.GET.get('word_count', '')
-            first_total_time = request.GET.get('total_time', '')
 
+            # first_word_count = request.GET.get('word_count', '')
+            # first_total_time = request.GET.get('total_time', '')
+            first_word_count = request.POST.get('word_count', '')
+            first_total_time = request.POST.get('total_time', '')
+            
             new_writing = WritingInfo.objects.create(writing_id=id, word_count=int(first_word_count), time_spent=int(first_total_time))
 
             # Serialize the data
