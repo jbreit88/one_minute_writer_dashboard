@@ -6,6 +6,8 @@ from rest_framework import status
 from dashboard.models import WritingInfo
 from dashboard.serializers import DashboardMetricsSerializer
 
+from unittest import skip
+
 CREATE_DASHBOARD_URL = reverse('dashboard:dashboard_list')
 
 class PublicDashboardAPITests(TestCase):
@@ -77,13 +79,13 @@ class PublicDashboardAPITests(TestCase):
 
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    #Post Tests 
-    #http://127.0.0.1:8000/dashboard?writing_id=21&total_time=100&word_count=50
+  
 
-    #Happy Paths 
-    
-  def test_post_dashboard_metrics_success(self): 
-    """Test Post dashboard metrics with proper payload is successful"""
+  #POST Tests/Happy Paths
+    #http://127.0.0.1:8000/dashboard?writing_id=21&total_time=100&word_count=50
+  
+  def test_post_dashboard_metrics_creation_success(self): 
+    """Test POST dashboard metrics with proper payload is successful"""
 
     payload = {
       'writing_id': 1,
@@ -94,3 +96,19 @@ class PublicDashboardAPITests(TestCase):
     response = self.client.post(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+  
+  def test_post_dashboard_metrics_update_existing_success(self):
+    """Test POST dashboard metrics with existing wrtings"""
+    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
+
+    payload = {
+      'writing_id': 1,
+      'total_time': 100, 
+      'word_count': 50
+    }
+
+    response = self.client.post(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+  
