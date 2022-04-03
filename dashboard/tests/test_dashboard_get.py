@@ -137,8 +137,7 @@ class PublicDashboardAPITests(TestCase):
 
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-  @skip
-  def test_post_dashboard_metrics_update_existing_success(self):
+  def test_post_dashboard_metrics_update_existing_0_total_time_success(self):
     """Test POST dashboard metrics with 0 total time"""
     WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
 
