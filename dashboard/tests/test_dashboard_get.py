@@ -164,3 +164,31 @@ class PublicDashboardAPITests(TestCase):
     response = self.client.post(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+  def test_post_dashboard_metrics_no_total_time_passed_failure_existing(self): 
+    """Test POST dashboard metrics with no total time in payload fails updating existing"""
+    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
+    
+    payload = {
+      'writing_id': 1,
+      'total_time': '', 
+      'word_count': 50
+    }
+
+    response = self.client.post(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+  
+  def test_post_dashboard_metrics_no_word_count_passed_failure_existing(self): 
+    """Test POST dashboard metrics with no word count in payload fails updating existing"""
+    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
+
+    payload = {
+      'writing_id': 1,
+      'total_time': 100, 
+      'word_count': ''
+    }
+
+    response = self.client.post(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
