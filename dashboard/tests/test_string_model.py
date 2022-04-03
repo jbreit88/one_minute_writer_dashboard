@@ -1,11 +1,5 @@
 from django.test import TestCase
-from django.urls import reverse 
-from rest_framework.test import APIClient 
-from rest_framework import status 
-
 from dashboard.models import StringManipulation
-from dashboard.serializers import DashboardMetricsSerializer
-
 from unittest import skip
 
 class StringManipulationModelTest(TestCase):
