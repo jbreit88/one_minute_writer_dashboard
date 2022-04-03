@@ -111,4 +111,17 @@ class PublicDashboardAPITests(TestCase):
 
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-  
+  def test_post_dashboard_metrics_multiple_creation_failure(self): 
+    """Test POST dashboard metrics with multiple ids in payload fails"""
+
+    id_list = ['1', '2']
+
+    payload = {
+      'writing_id': ','.join(id_list),
+      'total_time': 100, 
+      'word_count': 50
+    }
+
+    response = self.client.post(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
