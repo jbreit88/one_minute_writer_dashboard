@@ -9,6 +9,7 @@ from django.core.exceptions import BadRequest
 from dashboard.models import WritingInfo
 from dashboard.models import WritingTotals
 from dashboard.models import DashboardMetrics
+from dashboard.models import StringManipulation
 from dashboard.serializers import WritingInfoSerializer
 from dashboard.serializers import WritingsSerializer
 from dashboard.serializers import DashboardMetricsSerializer
@@ -78,7 +79,7 @@ def dashboard_list(request):
         # Capture the posted ID
         # id = request.GET.get('writing_id', '')
         id = request.POST.get('writing_id', '')
-        id_list = char_split(id)
+        id_list = StringManipulation.char_split(id)
         
         if len(id_list) > 1 or len(id_list) == 0:
             #checks nunmber of ids being passed, if there is more than 1 it fails
@@ -153,5 +154,5 @@ def dashboard_list(request):
 
                     return JsonResponse({'message': 'Bad request, object not saved'}, status='400')
 
-def char_split(word):
-    return [char for char in word]
+# def char_split(word):
+#     return [char for char in word]
