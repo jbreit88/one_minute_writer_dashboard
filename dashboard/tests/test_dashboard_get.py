@@ -76,3 +76,21 @@ class PublicDashboardAPITests(TestCase):
     response = self.client.get(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    #Post Tests 
+    #http://127.0.0.1:8000/dashboard?writing_id=21&total_time=100&word_count=50
+
+    #Happy Paths 
+    
+  def test_post_dashboard_metrics_success(self): 
+    """Test Post dashboard metrics with proper payload is successful"""
+
+    payload = {
+      'writing_id': 1,
+      'total_time': 100, 
+      'word_count': 50
+    }
+
+    response = self.client.post(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
