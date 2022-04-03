@@ -96,6 +96,32 @@ class PublicDashboardAPITests(TestCase):
     response = self.client.post(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+  def test_post_dashboard_metrics_creation_success_with_0_total_time(self): 
+    """Test POST dashboard metrics with 0 total time successful"""
+
+    payload = {
+      'writing_id': 1,
+      'total_time': 0, 
+      'word_count': 50
+    }
+
+    response = self.client.post(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+  def test_post_dashboard_metrics_creation_success_with_0_word_count(self): 
+    """Test POST dashboard metrics with 0 word count successful"""
+
+    payload = {
+      'writing_id': 1,
+      'total_time': 100, 
+      'word_count': 0
+    }
+
+    response = self.client.post(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
   
   def test_post_dashboard_metrics_update_existing_success(self):
     """Test POST dashboard metrics with existing wrtings"""
@@ -111,6 +137,23 @@ class PublicDashboardAPITests(TestCase):
 
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+  @skip
+  def test_post_dashboard_metrics_update_existing_success(self):
+    """Test POST dashboard metrics with 0 total time"""
+    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
+
+    payload = {
+      'writing_id': 1,
+      'total_time': 0, 
+      'word_count': 50
+    }
+
+    response = self.client.post(CREATE_DASHBOARD_URL, payload)
+
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+  #POST Tests/Sad Paths
   def test_post_dashboard_metrics_multiple_creation_failure(self): 
     """Test POST dashboard metrics with multiple ids in payload fails"""
 
