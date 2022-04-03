@@ -24,3 +24,7 @@ class DashboardMetrics:
         # import ipdb; ipdb.set_trace()
         self.total_words_all_time = total_words_all_time
         self.total_time_all_time = total_time_all_time
+
+class StringManipulation:
+    def char_split(word):
+        return [char for char in word] 
