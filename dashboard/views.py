@@ -153,6 +153,3 @@ def dashboard_list(request):
                         return JsonResponse(writing_info_serializer.data, status=status.HTTP_201_CREATED)
 
                     return JsonResponse({'message': 'Bad request, object not saved'}, status='400')
-
-# def char_split(word):
-#     return [char for char in word]
