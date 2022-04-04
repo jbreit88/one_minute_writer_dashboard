@@ -77,8 +77,6 @@ def dashboard_list(request):
 
     elif request.method == 'POST':
         # Capture the posted ID
-        # id = request.GET.get('writing_id', '')
-        # import ipdb; ipdb.set_trace()
         id = request.POST.get('writing_id', '')
         id_list = StringManipulation.char_split(id)
         
@@ -92,8 +90,6 @@ def dashboard_list(request):
 
             if entries_list == []:
                 # If this is a new document ID, no calculations need to be done. Simply grab the word count, the time, and the ID and persist them to the DB.
-                # first_word_count = request.GET.get('word_count', '')
-                # first_total_time = request.GET.get('total_time', '')
                 first_word_count = request.POST.get('word_count', '')
                 first_total_time = request.POST.get('total_time', '')
 
@@ -116,10 +112,7 @@ def dashboard_list(request):
 
             elif entries_list != []:
                 # If this document has been posted to the databse previously, we must aggregate all relevant data.
-                # import ipdb; ipdb.set_trace()
                 # First, capture our posted values
-                # posted_word_count = request.GET.get('word_count', '')
-                # posted_time = request.GET.get('total_time', '')
                 posted_word_count = request.POST.get('word_count', '')
                 posted_time = request.POST.get('total_time', '')
 
