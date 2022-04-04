@@ -21,6 +21,5 @@ class WritingTotals:
 
 class DashboardMetrics:
     def __init__(self, total_words_all_time, total_time_all_time):
-        # import ipdb; ipdb.set_trace()
         self.total_words_all_time = total_words_all_time
         self.total_time_all_time = total_time_all_time

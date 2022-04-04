@@ -6,6 +6,9 @@ from rest_framework import status
 from dashboard.models import WritingInfo
 from dashboard.serializers import DashboardMetricsSerializer
 
+from unittest import skip
+
+
 CREATE_DASHBOARD_URL = reverse('dashboard:dashboard_list')
 
 class PublicDashboardAPITests(TestCase):
@@ -13,6 +16,7 @@ class PublicDashboardAPITests(TestCase):
   def setUp(self): 
     self.client = APIClient()
 
+  #GET Tests/Happy Paths
   def test_get_dashboard_metrics_success(self):
     """Test retreiving dashboard metrics with valid payload is successful"""
     WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
@@ -25,18 +29,6 @@ class PublicDashboardAPITests(TestCase):
 
     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-  def test_get_dashboard_metrics_fail(self):
-    """Test that a payload with a writing id that doesn't exist fails"""
-    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
-
-    payload = {
-      'writing_ids': '2'
-    }
-
-    response = self.client.get(CREATE_DASHBOARD_URL, payload)
-    
-    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-  
   def test_get_dashboard_metrics_success_multiple(self):
     """Test that a payload can have multiple ids and return a 200"""
     WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
@@ -50,6 +42,19 @@ class PublicDashboardAPITests(TestCase):
     response = self.client.get(CREATE_DASHBOARD_URL, payload)
 
     self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+  #GET Tests/Sad Paths
+  def test_get_dashboard_metrics_fail(self):
+    """Test that a payload with a writing id that doesn't exist fails"""
+    WritingInfo.objects.create(id = 1, writing_id = 1, word_count = 100, time_spent = 200,)
+
+    payload = {
+      'writing_ids': '2'
+    }
+
+    response = self.client.get(CREATE_DASHBOARD_URL, payload)
+    
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
   def test_get_dashboard_metrics_fail_multiple(self):
     """Test that a respons will fail with multiple incorrect payload variables"""
