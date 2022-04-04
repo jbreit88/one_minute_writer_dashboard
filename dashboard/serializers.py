@@ -19,3 +19,4 @@ class WritingsSerializer(serializers.Serializer):
 class DashboardMetricsSerializer(serializers.Serializer):
     total_words_all_time = serializers.IntegerField()
     total_time_all_time = serializers.IntegerField()
+    average_words_per_minute = serializers.IntegerField()
