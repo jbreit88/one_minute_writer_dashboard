@@ -18,7 +18,7 @@ from django.db.models import Sum
 
 @api_view(['GET', 'POST'])
 def dashboard_list(request):
-    
+
     if request.method == 'GET':
         #receive array of writing_ids associated with user as writing_ids
         writing_ids = request.GET.get('writing_ids', '').split(',')
@@ -77,29 +77,38 @@ def dashboard_list(request):
 
     elif request.method == 'POST':
         # Capture the posted ID
-        import ipdb; ipdb.set_trace()
-        id = request.POST.get('writing_id', '')
-        #uses model method (same as .chars in Ruby) and calls this on the id list being passed.
-        id_list = StringManipulation.char_split(id)
-        
-        if len(id_list) > 1 or len(id_list) == 0:
-            #checks nunmber of ids being passed, if there is more than 1 it fails
+        id = request.GET.get('writing_id', '')
+
+        # If any special characters in id, it is not a good ID.
+        special_characters = "!@#$%^&*()-+?_=,<>/"
+
+        if any(c in special_characters for c in id):
+            raise BadRequest('Invalid request')
+        elif id == '':
             raise BadRequest('Invalid request')
         else:
-        # Find all rows in database associated with the document ID provided
+            id_int = int(id)
+
+
+        if not isinstance(id_int, int): #if not an int bad request
+            raise BadRequest('Invalid request')
+        elif id_int <= 0: # if ID is less than 1 bad request
+            raise BadRequest('Invalid request')
+        else:
+            # Find all rows in database associated with the document ID provided
             all_entries = WritingInfo.objects.filter(writing_id=id)
             entries_list = list(all_entries) # Change all entries into a list, not a query object.
 
             if entries_list == []:
                 # If this is a new document ID, no calculations need to be done. Simply grab the word count, the time, and the ID and persist them to the DB.
-                first_word_count = request.POST.get('word_count', '')
-                first_total_time = request.POST.get('total_time', '')
+                first_word_count = request.GET.get('word_count', '')
+                first_total_time = request.GET.get('total_time', '')
 
                 if first_word_count == '' or first_total_time == '':
-                    #checks that all values are present and not left empty 
+                    #checks that all values are present and not left empty
                     raise BadRequest('Invalid request')
                 else:
-                
+
                     new_writing = WritingInfo.objects.create(writing_id=id, word_count=int(first_word_count), time_spent=int(first_total_time))
 
                     # Serialize the data
@@ -115,14 +124,13 @@ def dashboard_list(request):
             elif entries_list != []:
                 # If this document has been posted to the databse previously, we must aggregate all relevant data.
                 # First, capture our posted values
-                posted_word_count = request.POST.get('word_count', '')
-                posted_time = request.POST.get('total_time', '')
+                posted_word_count = request.GET.get('word_count', '')
+                posted_time = request.GET.get('total_time', '')
 
                 if posted_word_count == '' or posted_time == '':
                     #checks that all value are present
                     raise BadRequest('Invalid request')
                 else:
-
 
                     # Second, filter our database by the document ID to find all rows that are associated with this document. Then sub the word_count column and the time_spent column.
                     w = WritingInfo.objects.filter(writing_id=id)
