@@ -77,7 +77,9 @@ def dashboard_list(request):
 
     elif request.method == 'POST':
         # Capture the posted ID
+        import ipdb; ipdb.set_trace()
         id = request.POST.get('writing_id', '')
+        #uses model method (same as .chars in Ruby) and calls this on the id list being passed.
         id_list = StringManipulation.char_split(id)
         
         if len(id_list) > 1 or len(id_list) == 0:
