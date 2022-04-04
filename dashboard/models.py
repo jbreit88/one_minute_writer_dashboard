@@ -20,6 +20,7 @@ class WritingTotals:
         self.total_time_in_seconds = total_time_in_seconds #Time spent on writing in seconds
 
 class DashboardMetrics:
-    def __init__(self, total_words_all_time, total_time_all_time):
+    def __init__(self, total_words_all_time, total_time_all_time, average_words_per_minute):
         self.total_words_all_time = total_words_all_time
         self.total_time_all_time = total_time_all_time
+        self.average_words_per_minute = average_words_per_minute

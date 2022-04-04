@@ -66,8 +66,11 @@ def dashboard_list(request):
                 time = time + writing.total_time_in_seconds
                 words = words + writing.total_words
 
+            seconds_to_minutes = round(time / 60, 2)
+            avg_wpm = words/seconds_to_minutes
+
             # Create a dashboard_metrics object with the totals calculated above
-            dashboard_metrics = DashboardMetrics(total_words_all_time=words, total_time_all_time=time)
+            dashboard_metrics = DashboardMetrics(total_words_all_time=words, total_time_all_time=time, average_words_per_minute=avg_wpm)
 
             # Serialize data and send in a response.
             dashboard_serializer = DashboardMetricsSerializer(dashboard_metrics)
