@@ -88,20 +88,8 @@ WSGI_APPLICATION = 'one_minute_writer_dashboard.wsgi.application'
 #     }
 # }
 
-#  'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         # 'NAME': 'brad',
-#         # 'USER': 'brad',
-#         'NAME': 'johnnapier',
-#         'USER': 'johnnapier',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         # 'PORT': '5433',
-#         'PORT': '5432',
-#     }
-
-default_db_url = "postgres://brad:brad@localhost:5433/brad"
-# default_db_url = "postgres://johnnapier:johnnapier@localhost:5432/johnnapier"
+# default_db_url = "postgres://brad:brad@localhost:5433/brad"
+default_db_url = "postgres://johnnapier:johnnapier@localhost:5432/johnnapier"
 
 DATABASES = {
     'default': env.db(default=default_db_url)

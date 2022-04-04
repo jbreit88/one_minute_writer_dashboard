@@ -23,7 +23,3 @@ class DashboardMetrics:
     def __init__(self, total_words_all_time, total_time_all_time):
         self.total_words_all_time = total_words_all_time
         self.total_time_all_time = total_time_all_time
-
-class StringManipulation:
-    def char_split(word):
-        return [char for char in word] 

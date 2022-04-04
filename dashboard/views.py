@@ -9,7 +9,6 @@ from django.core.exceptions import BadRequest
 from dashboard.models import WritingInfo
 from dashboard.models import WritingTotals
 from dashboard.models import DashboardMetrics
-from dashboard.models import StringManipulation
 from dashboard.serializers import WritingInfoSerializer
 from dashboard.serializers import WritingsSerializer
 from dashboard.serializers import DashboardMetricsSerializer
