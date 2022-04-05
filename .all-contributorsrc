@@ -12,7 +12,9 @@
       "profile": "https://github.com/JCNapier",
       "contributions": [
         "test",
-        "review"
+        "review",
+        "code",
+        "ideas"
       ]
     },
     {
@@ -22,7 +24,20 @@
       "profile": "https://github.com/jbreit88",
       "contributions": [
         "review",
-        "doc"
+        "doc",
+        "code",
+        "ideas",
+        "design"
+      ]
+    },
+    {
+      "login": "dylan-harper",
+      "name": "Dylan Harper",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39470230?v=4",
+      "profile": "https://github.com/dylan-harper",
+      "contributions": [
+        "ideas",
+        "review"
       ]
     },
     {
