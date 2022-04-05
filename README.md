@@ -61,6 +61,8 @@ This is a microservice designed to store data for and calculate user metrics for
 
 You can connect to this app and access the endpoints from https://enigmatic-oasis-75046.herokuapp.com/
 
+See further documentation on accessing the [backend API](https://github.com/one-minute-writer/one_minute_writer_be) that consumes this microservice, and the user facing [frontend app](https://github.com/one-minute-writer/one_minute_writer_fe) in their respective READMEs.
+
 ----------
 
 ## Project Description
@@ -95,8 +97,9 @@ Available endpoints (See the [Postman Collection](https://www.getpostman.com/col
 Dashboard Metrics by User Writing IDs:
 ```json
   {
-    "total_words_all_time": 1142,
-    "total_time_all_time": 1997
+    "total_words_all_time": 24343,
+    "total_time_all_time": 79733,
+    "average_words_per_minute": 18
   }
   
 ```
