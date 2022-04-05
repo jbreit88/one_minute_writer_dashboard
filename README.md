@@ -142,10 +142,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/JCNapier"><img src="https://avatars.githubusercontent.com/u/81737385?v=4?s=100" width="100px;" alt=""/><br /><sub><b>John Napier</b></sub></a><br /><a href="https://github.com/one-minute-writer/one_minute_writer_dashboard/commits?author=JCNapier" title="Tests">⚠️</a> <a href="https://github.com/one-minute-writer/one_minute_writer_dashboard/pulls?q=is%3Apr+reviewed-by%3AJCNapier" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/JCNapier"><img src="https://avatars.githubusercontent.com/u/81737385?v=4?s=100" width="100px;" alt=""/><br /><sub><b>John Napier</b></sub></a><br /><a href="https://github.com/one-minute-writer/one_minute_writer_dashboard/commits?author=JCNapier" title="Tests">⚠️</a> <a href="https://github.com/one-minute-writer/one_minute_writer_dashboard/pulls?q=is%3Apr+reviewed-by%3AJCNapier" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/one-minute-writer/one_minute_writer_dashboard/commits?author=JCNapier" title="Code">💻</a> <a href="#ideas-JCNapier" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/jbreit88"><img src="https://avatars.githubusercontent.com/u/88853324?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brad (he/him)</b></sub></a><br /><a href="https://github.com/one-minute-writer/one_minute_writer_dashboard/pulls?q=is%3Apr+reviewed-by%3Ajbreit88" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/one-minute-writer/one_minute_writer_dashboard/commits?author=jbreit88" title="Documentation">📖</a></td>
   </tr>
- 
 </table>
 
 <!-- markdownlint-restore -->
