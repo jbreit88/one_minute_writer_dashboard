@@ -13,8 +13,8 @@
       "contributions": [
         "test",
         "review"
-        ]
-      },
+      ]
+    },
     {
       "login": "jbreit88",
       "name": "Brad (he/him)",
@@ -23,6 +23,16 @@
       "contributions": [
         "review",
         "doc"
+      ]
+    },
+    {
+      "login": "kevingloss",
+      "name": "Kevin Gloss",
+      "avatar_url": "https://avatars.githubusercontent.com/u/83426676?v=4",
+      "profile": "https://github.com/kevingloss",
+      "contributions": [
+        "ideas",
+        "review"
       ]
     }
   ],
