@@ -29,6 +29,16 @@
         "ideas",
         "design"
       ]
+    },
+    {
+      "login": "dylan-harper",
+      "name": "Dylan Harper",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39470230?v=4",
+      "profile": "https://github.com/dylan-harper",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
