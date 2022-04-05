@@ -39,6 +39,16 @@
         "ideas",
         "review"
       ]
+    },
+    {
+      "login": "kevingloss",
+      "name": "Kevin Gloss",
+      "avatar_url": "https://avatars.githubusercontent.com/u/83426676?v=4",
+      "profile": "https://github.com/kevingloss",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
