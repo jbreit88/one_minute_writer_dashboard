@@ -12,7 +12,9 @@
       "profile": "https://github.com/JCNapier",
       "contributions": [
         "test",
-        "review"
+        "review",
+        "code",
+        "ideas"
       },
     {
       "login": "jbreit88",
@@ -21,7 +23,10 @@
       "profile": "https://github.com/jbreit88",
       "contributions": [
         "review",
-        "doc"
+        "doc",
+        "code",
+        "design",
+        "ideas"
       ]
     }
   ],
