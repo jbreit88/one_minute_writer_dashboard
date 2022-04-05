@@ -13,8 +13,8 @@
       "contributions": [
         "test",
         "review"
-        ]
-      },
+      ]
+    },
     {
       "login": "jbreit88",
       "name": "Brad (he/him)",
@@ -22,7 +22,10 @@
       "profile": "https://github.com/jbreit88",
       "contributions": [
         "review",
-        "doc"
+        "doc",
+        "code",
+        "ideas",
+        "design"
       ]
     }
   ],
