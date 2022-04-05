@@ -82,7 +82,8 @@ One minute writer is for creatives who are seeking inspiration and a space to do
 ----------
 
 ## API Endpoints
-Available endpoints (See the [Postman Collection](https://www.getpostman.com/collections/4eed83f8f6f286f882a0))
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6ccbdf83841f027b6c7a?action=collection%2Fimport)
 
 ###  Dashboard Metrics
 
