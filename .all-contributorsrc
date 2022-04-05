@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "JCNapier",
+      "name": "John Napier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81737385?v=4",
+      "profile": "https://github.com/JCNapier",
+      "contributions": [
+        "test",
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "one_minute_writer_dashboard",
+  "projectOwner": "one-minute-writer",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
